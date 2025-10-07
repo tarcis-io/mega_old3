@@ -2,6 +2,7 @@
 package config
 
 import (
+	"os"
 	"time"
 )
 
@@ -60,4 +61,11 @@ func newParser() *parser {
 		errs: []error{},
 	}
 	return parser
+}
+
+func (parser *parser) getEnv(envKey, envDefault string) string {
+	if envValue, isSet := os.LookupEnv(envKey); isSet {
+		return envValue
+	}
+	return envDefault
 }
