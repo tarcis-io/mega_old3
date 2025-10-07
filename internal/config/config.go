@@ -45,3 +45,8 @@ type (
 		ServerShutdownTimeout time.Duration
 	}
 )
+
+func New() (*Config, error) {
+	config := &Config{}
+	return config, nil
+}
