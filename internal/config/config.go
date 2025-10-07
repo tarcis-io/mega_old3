@@ -2,6 +2,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"time"
 )
@@ -75,7 +76,7 @@ func getParsedEnv[T any](envKey, envDefault string, parse func(string) (T, error
 	parsedValue, err := parse(envValue)
 	if err != nil {
 		var zero T
-		return zero, err
+		return zero, fmt.Errorf("failed to parse environment variable (%s) got=%q: %w", envKey, envValue, err)
 	}
 	return parsedValue, nil
 }
