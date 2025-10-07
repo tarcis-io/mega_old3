@@ -63,9 +63,19 @@ func newParser() *parser {
 	return parser
 }
 
-func (parser *parser) getEnv(envKey, envDefault string) string {
+func getEnv(envKey, envDefault string) string {
 	if envValue, isSet := os.LookupEnv(envKey); isSet {
 		return envValue
 	}
 	return envDefault
+}
+
+func getParsedEnv[T any](envKey, envDefault string, parse func(string) (T, error)) (T, error) {
+	envValue := getEnv(envKey, envDefault)
+	parsedValue, err := parse(envValue)
+	if err != nil {
+		var zero T
+		return zero, err
+	}
+	return parsedValue, nil
 }
