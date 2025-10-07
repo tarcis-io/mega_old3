@@ -44,9 +44,20 @@ type (
 		// Default: 15 * time.Second.
 		ServerShutdownTimeout time.Duration
 	}
+
+	parser struct {
+		errs []error
+	}
 )
 
 func New() (*Config, error) {
 	config := &Config{}
 	return config, nil
+}
+
+func newParser() *parser {
+	parser := &parser{
+		errs: []error{},
+	}
+	return parser
 }
