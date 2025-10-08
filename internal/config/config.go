@@ -2,7 +2,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 	"time"
 )
@@ -72,27 +71,11 @@ func (parser *parser) env(envKey, envDefault string) string {
 }
 
 func (parser *parser) duration(envKey, envDefault string) time.Duration {
-	parsedValue, err := getParsedEnv(envKey, envDefault, time.ParseDuration)
+	env := parser.env(envKey, envDefault)
+	duration, err := time.ParseDuration(env)
 	if err != nil {
-		parser.errs = append(parser.errs, fmt.Errorf("invalid time.Duration: %w", err))
+		parser.errs = append(parser.errs, err)
 		return 0
 	}
-	return parsedValue
-}
-
-func getEnv(envKey, envDefault string) string {
-	if envValue, isSet := os.LookupEnv(envKey); isSet {
-		return envValue
-	}
-	return envDefault
-}
-
-func getParsedEnv[T any](envKey, envDefault string, parse func(string) (T, error)) (T, error) {
-	envValue := getEnv(envKey, envDefault)
-	parsedValue, err := parse(envValue)
-	if err != nil {
-		var zero T
-		return zero, fmt.Errorf("failed to parse environment variable (%s) got=%q: %w", envKey, envValue, err)
-	}
-	return parsedValue, nil
+	return duration
 }
