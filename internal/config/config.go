@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -101,9 +102,18 @@ func (parser *parser) env(envKey, envDefault string) string {
 
 func (parser *parser) hostPort(envKey, envDefault string) string {
 	env := parser.env(envKey, envDefault)
-	_, _, err := net.SplitHostPort(env)
+	_, portString, err := net.SplitHostPort(env)
 	if err != nil {
 		parser.errs = append(parser.errs, fmt.Errorf("failed to parse \"host:port\" (%s) got=%q: %w", envKey, env, err))
+		return ""
+	}
+	port, err := strconv.Atoi(portString)
+	if err != nil {
+		parser.errs = append(parser.errs, fmt.Errorf(""))
+		return ""
+	}
+	if port < 1 || port > 65535 {
+		parser.errs = append(parser.errs, fmt.Errorf(""))
 		return ""
 	}
 	return env
