@@ -2,6 +2,7 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 	"net"
 	"os"
@@ -77,6 +78,9 @@ func New() (*Config, error) {
 		ServerWriteTimeout:      parser.duration(serverWriteTimeoutEnvKey, serverWriteTimeoutEnvDefault),
 		ServerIdleTimeout:       parser.duration(serverIdleTimeoutEnvKey, serverIdleTimeoutEnvDefault),
 		ServerShutdownTimeout:   parser.duration(serverShutdownTimeoutEnvKey, serverShutdownTimeoutEnvDefault),
+	}
+	if len(parser.errs) > 0 {
+		return nil, fmt.Errorf("failed to create config: %w", errors.Join(parser.errs...))
 	}
 	return config, nil
 }
