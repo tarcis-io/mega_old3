@@ -80,6 +80,7 @@ func (parser *parser) duration(envKey, envDefault string) time.Duration {
 	}
 	if duration <= 0 {
 		parser.errs = append(parser.errs, fmt.Errorf("duration (%s) must be greater than zero got=%q", envKey, env))
+		return 0
 	}
 	return duration
 }
