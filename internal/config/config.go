@@ -72,7 +72,9 @@ type (
 		ServerShutdownTimeout time.Duration
 	}
 
+	// parser is a helper struct for parsing configuration values.
 	parser struct {
+		// errs holds any errors that occurred during parsing.
 		errs []error
 	}
 )
