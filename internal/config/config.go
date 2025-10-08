@@ -8,6 +8,21 @@ import (
 	"time"
 )
 
+const (
+	serverAddressEnvKey               = "SERVER_ADDRESS"
+	serverAddressEnvDefault           = "localhost:8080"
+	serverReadTimeoutEnvKey           = "SERVER_READ_TIMEOUT"
+	serverReadTimeoutEnvDefault       = "5s"
+	serverReadHeaderTimeoutEnvKey     = "SERVER_READ_HEADER_TIMEOUT"
+	serverReadHeaderTimeoutEnvDefault = "2s"
+	serverWriteTimeoutEnvKey          = "SERVER_WRITE_TIMEOUT"
+	serverWriteTimeoutEnvDefault      = "10s"
+	serverIdleTimeoutEnvKey           = "SERVER_IDLE_TIMEOUT"
+	serverIdleTimeoutEnvDefault       = "60s"
+	serverShutdownTimeoutEnvKey       = "SERVER_SHUTDOWN_TIMEOUT"
+	serverShutdownTimeoutEnvDefault   = "15s"
+)
+
 type (
 	// Config holds the application configuration.
 	Config struct {
@@ -54,7 +69,15 @@ type (
 )
 
 func New() (*Config, error) {
-	config := &Config{}
+	parser := newParser()
+	config := &Config{
+		ServerAddress:           parser.hostPort(serverAddressEnvKey, serverAddressEnvDefault),
+		ServerReadTimeout:       parser.duration(serverReadTimeoutEnvKey, serverReadTimeoutEnvDefault),
+		ServerReadHeaderTimeout: parser.duration(serverReadHeaderTimeoutEnvKey, serverReadHeaderTimeoutEnvDefault),
+		ServerWriteTimeout:      parser.duration(serverWriteTimeoutEnvKey, serverWriteTimeoutEnvDefault),
+		ServerIdleTimeout:       parser.duration(serverIdleTimeoutEnvKey, serverIdleTimeoutEnvDefault),
+		ServerShutdownTimeout:   parser.duration(serverShutdownTimeoutEnvKey, serverShutdownTimeoutEnvDefault),
+	}
 	return config, nil
 }
 
