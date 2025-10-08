@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// Server environment variable key and default values.
 const (
 	serverAddressEnvKey               = "SERVER_ADDRESS"
 	serverAddressEnvDefault           = "localhost:8080"
@@ -25,6 +26,7 @@ const (
 	serverShutdownTimeoutEnvDefault   = "15s"
 )
 
+// TCP port range as per IANA standard.
 const (
 	minPort = 0
 	maxPort = 65535
