@@ -25,6 +25,11 @@ const (
 	serverShutdownTimeoutEnvDefault   = "15s"
 )
 
+const (
+	minPort = 0
+	maxPort = 65535
+)
+
 type (
 	// Config holds the application configuration.
 	Config struct {
@@ -112,7 +117,7 @@ func (parser *parser) hostPort(envKey, envDefault string) string {
 		parser.errs = append(parser.errs, fmt.Errorf(""))
 		return ""
 	}
-	if port < 1 || port > 65535 {
+	if port < minPort || port > maxPort {
 		parser.errs = append(parser.errs, fmt.Errorf(""))
 		return ""
 	}
