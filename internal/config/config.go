@@ -114,11 +114,11 @@ func (parser *parser) hostPort(envKey, envDefault string) string {
 	}
 	port, err := strconv.Atoi(portString)
 	if err != nil {
-		parser.errs = append(parser.errs, fmt.Errorf(""))
+		parser.errs = append(parser.errs, fmt.Errorf("failed to parse port (%s) got=%q: %w", envKey, portString, err))
 		return ""
 	}
 	if port < minPort || port > maxPort {
-		parser.errs = append(parser.errs, fmt.Errorf(""))
+		parser.errs = append(parser.errs, fmt.Errorf("port (%s) must be between %d and %d got=%d", envKey, minPort, maxPort, port))
 		return ""
 	}
 	return env
