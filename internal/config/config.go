@@ -101,12 +101,12 @@ func (parser *parser) env(envKey, envDefault string) string {
 
 func (parser *parser) hostPort(envKey, envDefault string) string {
 	env := parser.env(envKey, envDefault)
-	host, port, err := net.SplitHostPort(env)
+	_, _, err := net.SplitHostPort(env)
 	if err != nil {
 		parser.errs = append(parser.errs, fmt.Errorf("failed to parse \"host:port\" (%s) got=%q: %w", envKey, env, err))
 		return ""
 	}
-	return net.JoinHostPort(host, port)
+	return env
 }
 
 func (parser *parser) duration(envKey, envDefault string) time.Duration {
