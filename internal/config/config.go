@@ -2,6 +2,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"time"
 )
@@ -74,8 +75,11 @@ func (parser *parser) duration(envKey, envDefault string) time.Duration {
 	env := parser.env(envKey, envDefault)
 	duration, err := time.ParseDuration(env)
 	if err != nil {
-		parser.errs = append(parser.errs, err)
+		parser.errs = append(parser.errs, fmt.Errorf("failed to parse duration (%s) got=%q: %w", envKey, env, err))
 		return 0
+	}
+	if duration <= 0 {
+		parser.errs = append(parser.errs, fmt.Errorf("duration (%s) must be greater than zero got=%q", envKey, env))
 	}
 	return duration
 }
