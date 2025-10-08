@@ -3,6 +3,7 @@ package config
 
 import (
 	"fmt"
+	"net"
 	"os"
 	"time"
 )
@@ -69,6 +70,16 @@ func (parser *parser) env(envKey, envDefault string) string {
 		return env
 	}
 	return envDefault
+}
+
+func (parser *parser) hostPort(envKey, envDefault string) string {
+	env := parser.env(envKey, envDefault)
+	host, port, err := net.SplitHostPort(env)
+	if err != nil {
+		parser.errs = append(parser.errs, fmt.Errorf("failed to parse \"host:port\" (%s) got=%q: %w", envKey, env, err))
+		return ""
+	}
+	return net.JoinHostPort(host, port)
 }
 
 func (parser *parser) duration(envKey, envDefault string) time.Duration {
