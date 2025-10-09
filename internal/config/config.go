@@ -79,6 +79,8 @@ type (
 	}
 )
 
+// New creates and returns a new Config instance by loading, parsing, and
+// validating the application configuration.
 func New() (*Config, error) {
 	parser := newParser()
 	config := &Config{
