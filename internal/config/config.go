@@ -111,6 +111,9 @@ func (parser *parser) error() error {
 	return errors.Join(parser.errs...)
 }
 
+// appendError adds a new error to the parser's internal slice of errors.
+// It allows the parser to accumulate all configuration errors and report them
+// at once.
 func (parser *parser) appendError(err error) {
 	parser.errs = append(parser.errs, err)
 }
