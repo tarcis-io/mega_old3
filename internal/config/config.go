@@ -81,6 +81,9 @@ type (
 
 // New creates and returns a new Config instance by loading, parsing, and
 // validating the application configuration.
+// It returns a fully initialized Config on success.
+// If any configuration value fails to parse or is invalid, it returns a nil
+// Config and a single error that aggregates all the errors found.
 func New() (*Config, error) {
 	parser := newParser()
 	config := &Config{
@@ -91,12 +94,13 @@ func New() (*Config, error) {
 		ServerIdleTimeout:       parser.duration(serverIdleTimeoutEnvKey, serverIdleTimeoutEnvDefault),
 		ServerShutdownTimeout:   parser.duration(serverShutdownTimeoutEnvKey, serverShutdownTimeoutEnvDefault),
 	}
-	if err := parser.error(); err != nil {
+	if err := parser.err(); err != nil {
 		return nil, fmt.Errorf("failed to create config: %w", err)
 	}
 	return config, nil
 }
 
+// newParser creates and returns a new initialized parser instance.
 func newParser() *parser {
 	parser := &parser{
 		errs: []error{},
@@ -104,7 +108,10 @@ func newParser() *parser {
 	return parser
 }
 
-func (parser *parser) error() error {
+// err returns a single error containing all errors found during parsing
+// process.
+// If no errors were recorded, it returns nil.
+func (parser *parser) err() error {
 	if len(parser.errs) == 0 {
 		return nil
 	}
