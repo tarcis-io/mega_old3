@@ -115,6 +115,9 @@ func (parser *parser) appendError(err error) {
 	parser.errs = append(parser.errs, err)
 }
 
+// env retrieves the value of an environment variable named by the key, and
+// returns it.
+// If the variable is not set, it returns the provided default value.
 func (parser *parser) env(envKey, envDefault string) string {
 	if env, isSet := os.LookupEnv(envKey); isSet {
 		return env
@@ -122,8 +125,8 @@ func (parser *parser) env(envKey, envDefault string) string {
 	return envDefault
 }
 
-// hostPort get a "host:port" string from an environment variable, validates
-// it, and returns it.
+// hostPort retrieves a "host:port" string from an environment variable,
+// validates it, and returns it.
 // It also checks if the port is within the IANA range.
 // If parsing or validation fails, it records the error and returns an empty
 // string.
@@ -146,8 +149,8 @@ func (parser *parser) hostPort(envKey, envDefault string) string {
 	return env
 }
 
-// duration gets a duration string from an environment variable, parses it, and
-// returns it as a time.Duration.
+// duration retrieves a duration string from an environment variable, parses
+// it, and returns it as a time.Duration.
 // It also checks if the duration is greater than zero.
 // If parsing or validation fails, it records the error and returns a zero
 // duration.
