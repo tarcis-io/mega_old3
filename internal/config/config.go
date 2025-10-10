@@ -91,8 +91,8 @@ func New() (*Config, error) {
 		ServerIdleTimeout:       parser.duration(serverIdleTimeoutEnvKey, serverIdleTimeoutEnvDefault),
 		ServerShutdownTimeout:   parser.duration(serverShutdownTimeoutEnvKey, serverShutdownTimeoutEnvDefault),
 	}
-	if len(parser.errs) > 0 {
-		return nil, fmt.Errorf("failed to create config: %w", errors.Join(parser.errs...))
+	if err := parser.error(); err != nil {
+		return nil, fmt.Errorf("failed to create config: %w", err)
 	}
 	return config, nil
 }
@@ -102,6 +102,17 @@ func newParser() *parser {
 		errs: []error{},
 	}
 	return parser
+}
+
+func (parser *parser) error() error {
+	if len(parser.errs) == 0 {
+		return nil
+	}
+	return errors.Join(parser.errs...)
+}
+
+func (parser *parser) appendError(err error) {
+	parser.errs = append(parser.errs, err)
 }
 
 func (parser *parser) env(envKey, envDefault string) string {
@@ -115,16 +126,16 @@ func (parser *parser) hostPort(envKey, envDefault string) string {
 	env := parser.env(envKey, envDefault)
 	_, portString, err := net.SplitHostPort(env)
 	if err != nil {
-		parser.errs = append(parser.errs, fmt.Errorf("failed to parse \"host:port\" (%s) got=%q: %w", envKey, env, err))
+		parser.appendError(fmt.Errorf("failed to parse \"host:port\" (%s) got=%q: %w", envKey, env, err))
 		return ""
 	}
 	port, err := strconv.Atoi(portString)
 	if err != nil {
-		parser.errs = append(parser.errs, fmt.Errorf("failed to parse port (%s) got=%q: %w", envKey, portString, err))
+		parser.appendError(fmt.Errorf("failed to parse port (%s) got=%q: %w", envKey, portString, err))
 		return ""
 	}
 	if port < minPort || port > maxPort {
-		parser.errs = append(parser.errs, fmt.Errorf("port (%s) must be between %d and %d got=%d", envKey, minPort, maxPort, port))
+		parser.appendError(fmt.Errorf("port (%s) must be between %d and %d got=%d", envKey, minPort, maxPort, port))
 		return ""
 	}
 	return env
@@ -134,11 +145,11 @@ func (parser *parser) duration(envKey, envDefault string) time.Duration {
 	env := parser.env(envKey, envDefault)
 	duration, err := time.ParseDuration(env)
 	if err != nil {
-		parser.errs = append(parser.errs, fmt.Errorf("failed to parse duration (%s) got=%q: %w", envKey, env, err))
+		parser.appendError(fmt.Errorf("failed to parse duration (%s) got=%q: %w", envKey, env, err))
 		return 0
 	}
 	if duration <= 0 {
-		parser.errs = append(parser.errs, fmt.Errorf("duration (%s) must be greater than zero got=%q", envKey, env))
+		parser.appendError(fmt.Errorf("duration (%s) must be greater than zero got=%q", envKey, env))
 		return 0
 	}
 	return duration
