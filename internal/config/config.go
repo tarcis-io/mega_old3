@@ -122,6 +122,11 @@ func (parser *parser) env(envKey, envDefault string) string {
 	return envDefault
 }
 
+// hostPort get a "host:port" string from an environment variable, validates
+// it, and returns it.
+// It also checks if the port is within the IANA range.
+// If parsing or validation fails, it records the error and returns an empty
+// string.
 func (parser *parser) hostPort(envKey, envDefault string) string {
 	env := parser.env(envKey, envDefault)
 	_, portString, err := net.SplitHostPort(env)
@@ -141,6 +146,11 @@ func (parser *parser) hostPort(envKey, envDefault string) string {
 	return env
 }
 
+// duration gets a duration string from an environment variable, parses it, and
+// returns it as a time.Duration.
+// It also checks if the duration is greater than zero.
+// If parsing or validation fails, it records the error and returns a zero
+// duration.
 func (parser *parser) duration(envKey, envDefault string) time.Duration {
 	env := parser.env(envKey, envDefault)
 	duration, err := time.ParseDuration(env)
