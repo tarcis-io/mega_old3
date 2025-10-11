@@ -34,6 +34,26 @@ func TestNew(t *testing.T) {
 			},
 			wantError: false,
 		},
+		{
+			name: "should create a new Config instance with custom values",
+			envValues: map[string]string{
+				serverAddressEnvKey:           "localhost:8081",
+				serverReadTimeoutEnvKey:       "20s",
+				serverReadHeaderTimeoutEnvKey: "10s",
+				serverWriteTimeoutEnvKey:      "20s",
+				serverIdleTimeoutEnvKey:       "90s",
+				serverShutdownTimeoutEnvKey:   "30s",
+			},
+			wantConfig: &Config{
+				ServerAddress:           "localhost:8081",
+				ServerReadTimeout:       mustParseDuration("20s"),
+				ServerReadHeaderTimeout: mustParseDuration("10s"),
+				ServerWriteTimeout:      mustParseDuration("20s"),
+				ServerIdleTimeout:       mustParseDuration("90s"),
+				ServerShutdownTimeout:   mustParseDuration("30s"),
+			},
+			wantError: false,
+		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
