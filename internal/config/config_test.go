@@ -15,6 +15,10 @@ type (
 	}
 )
 
+// TestNew verifies if the New function correctly creates a new Config
+// instance.
+// It covers default configuration values, custom valid configuration values
+// and error handling for invalid configuration.
 func TestNew(t *testing.T) {
 	testCases := []testCase{}
 	for _, tc := range testCases {
