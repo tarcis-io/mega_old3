@@ -1,6 +1,7 @@
 package config
 
 import (
+	"reflect"
 	"testing"
 	"time"
 )
@@ -20,6 +21,14 @@ func TestNew(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			for envKey, envValue := range tc.envValues {
 				t.Setenv(envKey, envValue)
+			}
+			config, err := New()
+			if (err != nil) != tc.wantError {
+			}
+			if tc.wantError {
+				return
+			}
+			if !reflect.DeepEqual(config, tc.wantConfig) {
 			}
 		})
 	}
