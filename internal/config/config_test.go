@@ -7,6 +7,7 @@ import (
 )
 
 type (
+	// testCase holds the data for a single test case.
 	testCase struct {
 		name       string
 		envValues  map[string]string
