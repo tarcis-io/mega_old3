@@ -5,6 +5,15 @@ import (
 	"time"
 )
 
+type (
+	testCase struct {
+		name       string
+		envValues  map[string]string
+		wantConfig *Config
+		wantError  bool
+	}
+)
+
 func TestNew(t *testing.T) {
 }
 
