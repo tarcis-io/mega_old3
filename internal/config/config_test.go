@@ -24,11 +24,13 @@ func TestNew(t *testing.T) {
 			}
 			config, err := New()
 			if (err != nil) != tc.wantError {
+				t.Fatalf("New() error got=%v wantError=%t", err, tc.wantError)
 			}
 			if tc.wantError {
 				return
 			}
 			if !reflect.DeepEqual(config, tc.wantConfig) {
+				t.Fatalf("New() *Config\ngot=%#v\nwant=%#v", config, tc.wantConfig)
 			}
 		})
 	}
