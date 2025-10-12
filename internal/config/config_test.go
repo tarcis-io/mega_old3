@@ -83,6 +83,13 @@ func TestNew(t *testing.T) {
 			wantError: true,
 		},
 		{
+			name: "should return an error if the server read timeout cannot be parsed: 5sec",
+			envValues: map[string]string{
+				serverReadTimeoutEnvKey: "5sec",
+			},
+			wantError: true,
+		},
+		{
 			name: "should return an error if the server read timeout cannot be parsed: 0s",
 			envValues: map[string]string{
 				serverReadTimeoutEnvKey: "0s",
@@ -100,6 +107,13 @@ func TestNew(t *testing.T) {
 			name: "should return an error if the server read header timeout cannot be parsed: empty",
 			envValues: map[string]string{
 				serverReadHeaderTimeoutEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server read header timeout cannot be parsed: 5sec",
+			envValues: map[string]string{
+				serverReadHeaderTimeoutEnvKey: "5sec",
 			},
 			wantError: true,
 		},
@@ -125,6 +139,13 @@ func TestNew(t *testing.T) {
 			wantError: true,
 		},
 		{
+			name: "should return an error if the server write timeout cannot be parsed: 5sec",
+			envValues: map[string]string{
+				serverWriteTimeoutEnvKey: "5sec",
+			},
+			wantError: true,
+		},
+		{
 			name: "should return an error if the server write timeout cannot be parsed: 0s",
 			envValues: map[string]string{
 				serverWriteTimeoutEnvKey: "0s",
@@ -146,6 +167,13 @@ func TestNew(t *testing.T) {
 			wantError: true,
 		},
 		{
+			name: "should return an error if the server idle timeout cannot be parsed: 5sec",
+			envValues: map[string]string{
+				serverIdleTimeoutEnvKey: "5sec",
+			},
+			wantError: true,
+		},
+		{
 			name: "should return an error if the server idle timeout cannot be parsed: 0s",
 			envValues: map[string]string{
 				serverIdleTimeoutEnvKey: "0s",
@@ -163,6 +191,13 @@ func TestNew(t *testing.T) {
 			name: "should return an error if the server shutdown timeout cannot be parsed: empty",
 			envValues: map[string]string{
 				serverShutdownTimeoutEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server shutdown timeout cannot be parsed: 5sec",
+			envValues: map[string]string{
+				serverShutdownTimeoutEnvKey: "5sec",
 			},
 			wantError: true,
 		},
