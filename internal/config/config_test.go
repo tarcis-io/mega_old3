@@ -75,6 +75,41 @@ func TestNew(t *testing.T) {
 			},
 			wantError: true,
 		},
+		{
+			name: "should return an error if the server read timeout cannot be parsed: empty",
+			envValues: map[string]string{
+				serverReadTimeoutEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server read header timeout cannot be parsed: empty",
+			envValues: map[string]string{
+				serverReadHeaderTimeoutEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server write timeout cannot be parsed: empty",
+			envValues: map[string]string{
+				serverWriteTimeoutEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server idle timeout cannot be parsed: empty",
+			envValues: map[string]string{
+				serverIdleTimeoutEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server shutdown timeout cannot be parsed: empty",
+			envValues: map[string]string{
+				serverShutdownTimeoutEnvKey: "",
+			},
+			wantError: true,
+		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
