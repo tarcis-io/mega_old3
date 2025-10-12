@@ -83,9 +83,23 @@ func TestNew(t *testing.T) {
 			wantError: true,
 		},
 		{
+			name: "should return an error if the server read timeout cannot be parsed: 0s",
+			envValues: map[string]string{
+				serverReadTimeoutEnvKey: "0s",
+			},
+			wantError: true,
+		},
+		{
 			name: "should return an error if the server read header timeout cannot be parsed: empty",
 			envValues: map[string]string{
 				serverReadHeaderTimeoutEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server read header timeout cannot be parsed: 0s",
+			envValues: map[string]string{
+				serverReadHeaderTimeoutEnvKey: "0s",
 			},
 			wantError: true,
 		},
@@ -97,6 +111,13 @@ func TestNew(t *testing.T) {
 			wantError: true,
 		},
 		{
+			name: "should return an error if the server write timeout cannot be parsed: 0s",
+			envValues: map[string]string{
+				serverWriteTimeoutEnvKey: "0s",
+			},
+			wantError: true,
+		},
+		{
 			name: "should return an error if the server idle timeout cannot be parsed: empty",
 			envValues: map[string]string{
 				serverIdleTimeoutEnvKey: "",
@@ -104,9 +125,23 @@ func TestNew(t *testing.T) {
 			wantError: true,
 		},
 		{
+			name: "should return an error if the server idle timeout cannot be parsed: 0s",
+			envValues: map[string]string{
+				serverIdleTimeoutEnvKey: "0s",
+			},
+			wantError: true,
+		},
+		{
 			name: "should return an error if the server shutdown timeout cannot be parsed: empty",
 			envValues: map[string]string{
 				serverShutdownTimeoutEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server shutdown timeout cannot be parsed: 0s",
+			envValues: map[string]string{
+				serverShutdownTimeoutEnvKey: "0s",
 			},
 			wantError: true,
 		},
