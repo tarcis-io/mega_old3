@@ -37,7 +37,7 @@ func TestNew(t *testing.T) {
 		{
 			name: "should create a new Config instance with custom values",
 			envValues: map[string]string{
-				serverAddressEnvKey:           "localhost:8081",
+				serverAddressEnvKey:           "127.0.0.1:8081",
 				serverReadTimeoutEnvKey:       "20s",
 				serverReadHeaderTimeoutEnvKey: "10s",
 				serverWriteTimeoutEnvKey:      "20s",
@@ -45,7 +45,7 @@ func TestNew(t *testing.T) {
 				serverShutdownTimeoutEnvKey:   "30s",
 			},
 			wantConfig: &Config{
-				ServerAddress:           "localhost:8081",
+				ServerAddress:           "127.0.0.1:8081",
 				ServerReadTimeout:       mustParseDuration("20s"),
 				ServerReadHeaderTimeout: mustParseDuration("10s"),
 				ServerWriteTimeout:      mustParseDuration("20s"),
@@ -53,6 +53,27 @@ func TestNew(t *testing.T) {
 				ServerShutdownTimeout:   mustParseDuration("30s"),
 			},
 			wantError: false,
+		},
+		{
+			name: "should return an error if the server address cannot be parsed: empty",
+			envValues: map[string]string{
+				serverAddressEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server address cannot be parsed: localhost",
+			envValues: map[string]string{
+				serverAddressEnvKey: "localhost",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the server address cannot be parsed: localhost:99999",
+			envValues: map[string]string{
+				serverAddressEnvKey: "localhost:99999",
+			},
+			wantError: true,
 		},
 	}
 	for _, tc := range testCases {
