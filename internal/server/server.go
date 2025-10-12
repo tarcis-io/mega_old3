@@ -3,6 +3,8 @@ package server
 import (
 	"net/http"
 	"time"
+
+	"mega/internal/config"
 )
 
 type (
@@ -22,3 +24,8 @@ type (
 		shutdownTimeout time.Duration
 	}
 )
+
+func New(config *config.Config) (*Server, error) {
+	server := &Server{}
+	return server, nil
+}
