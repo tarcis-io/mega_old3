@@ -55,6 +55,22 @@ func TestNew(t *testing.T) {
 			wantError: false,
 		},
 		{
+			name: "should create a new Config instance with default and custom values",
+			envValues: map[string]string{
+				serverAddressEnvKey:         "0.0.0.0:3000",
+				serverShutdownTimeoutEnvKey: "1m",
+			},
+			wantConfig: &Config{
+				ServerAddress:           "0.0.0.0:3000",
+				ServerReadTimeout:       mustParseDuration(serverReadTimeoutEnvDefault),
+				ServerReadHeaderTimeout: mustParseDuration(serverReadHeaderTimeoutEnvDefault),
+				ServerWriteTimeout:      mustParseDuration(serverWriteTimeoutEnvDefault),
+				ServerIdleTimeout:       mustParseDuration(serverIdleTimeoutEnvDefault),
+				ServerShutdownTimeout:   mustParseDuration("1m"),
+			},
+			wantError: false,
+		},
+		{
 			name: "should return an error if the server address cannot be parsed: empty",
 			envValues: map[string]string{
 				serverAddressEnvKey: "",
