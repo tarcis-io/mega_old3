@@ -1,6 +1,7 @@
 package server
 
 import (
+	"log/slog"
 	"net/http"
 	"time"
 
@@ -22,10 +23,12 @@ type (
 		idleTimeout time.Duration
 
 		shutdownTimeout time.Duration
+
+		logger *slog.Logger
 	}
 )
 
-func New(config *config.Config) (*Server, error) {
+func New(config *config.Config, logger *slog.Logger) (*Server, error) {
 	server := &Server{}
 	return server, nil
 }
