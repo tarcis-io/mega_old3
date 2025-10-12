@@ -108,7 +108,7 @@ func newParser() *parser {
 	return parser
 }
 
-// err returns a single error containing all errors found during parsing
+// err returns a single error containing all errors found during the parsing
 // process.
 // If no errors were recorded, it returns nil.
 func (parser *parser) err() error {
