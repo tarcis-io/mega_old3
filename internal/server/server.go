@@ -32,3 +32,7 @@ func New(config *config.Config, logger *slog.Logger) (*Server, error) {
 	server := &Server{}
 	return server, nil
 }
+
+func (server *Server) Run() error {
+	return nil
+}
