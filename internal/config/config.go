@@ -13,9 +13,9 @@ import (
 // Log environment variable key and default values.
 const (
 	logLevelEnvKey      = "LOG_LEVEL"
-	logLevelEnvDefault  = "info"
+	logLevelEnvDefault  = "INFO"
 	logFormatEnvKey     = "LOG_FORMAT"
-	logFormatEnvDefault = "json"
+	logFormatEnvDefault = "JSON"
 )
 
 // Server environment variable key and default values.
