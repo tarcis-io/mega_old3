@@ -10,6 +10,14 @@ import (
 	"time"
 )
 
+// Log environment variable key and default values.
+const (
+	logLevelEnvKey      = "LOG_LEVEL"
+	logLevelEnvDefault  = "info"
+	logFormatEnvKey     = "LOG_FORMAT"
+	logFormatEnvDefault = "json"
+)
+
 // Server environment variable key and default values.
 const (
 	serverAddressEnvKey               = "SERVER_ADDRESS"
