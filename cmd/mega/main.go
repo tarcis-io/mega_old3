@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
 
@@ -19,14 +20,14 @@ func run() error {
 	logger.Info("Running application")
 	config, err := config.New()
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to load config: %w", err)
 	}
 	server, err := server.New(config, logger)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to create server: %w", err)
 	}
 	if err := server.Run(); err != nil {
-		return err
+		return fmt.Errorf("server stopped unexpectedly: %w", err)
 	}
 	logger.Info("Application stopped successfully")
 	return nil
