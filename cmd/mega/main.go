@@ -11,6 +11,7 @@ import (
 )
 
 // main is the entry point for the mega application.
+// It delegates to the run function and handles the final exit code.
 func main() {
 	if err := run(); err != nil {
 		os.Exit(1)
@@ -18,7 +19,8 @@ func main() {
 }
 
 // run loads the configuration, creates a new server and runs it.
-// It returns an error if any of the steps fail.
+// It is responsible for the entire application lifecycle and returns an error
+// if any step fails.
 func run() error {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	logger.Info("Running application")
