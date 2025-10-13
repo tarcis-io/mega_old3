@@ -11,7 +11,8 @@ import (
 )
 
 // main is the entry point for the mega application.
-// It delegates to the run function and handles the final exit code.
+// It sets up the logger, delegates to the run function and handles the final
+// exit code.
 func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	logger.Info("Running application")
