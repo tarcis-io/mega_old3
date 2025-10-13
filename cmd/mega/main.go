@@ -28,5 +28,6 @@ func run() error {
 	if err := server.Run(); err != nil {
 		return err
 	}
+	logger.Info("Application stopped successfully")
 	return nil
 }
