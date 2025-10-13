@@ -3,6 +3,9 @@ package main
 import (
 	"log/slog"
 	"os"
+
+	"mega/internal/config"
+	"mega/internal/server"
 )
 
 func main() {
@@ -14,5 +17,16 @@ func main() {
 func run() error {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	logger.Info("Running application")
+	config, err := config.New()
+	if err != nil {
+		return err
+	}
+	server, err := server.New(config, logger)
+	if err != nil {
+		return err
+	}
+	if err := server.Run(); err != nil {
+		return err
+	}
 	return nil
 }
