@@ -1,3 +1,4 @@
+// Package main is the entry point for the mega application.
 package main
 
 import (
@@ -9,12 +10,15 @@ import (
 	"mega/internal/server"
 )
 
+// main is the entry point for the mega application.
 func main() {
 	if err := run(); err != nil {
 		os.Exit(1)
 	}
 }
 
+// run loads the configuration, creates a new server and runs it.
+// It returns an error if any of the steps fail.
 func run() error {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	logger.Info("Running application")
