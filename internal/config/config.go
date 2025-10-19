@@ -16,7 +16,12 @@ const (
 	logLevelEnvKey      = "LOG_LEVEL"
 	logLevelEnvDefault  = "INFO"
 	logFormatEnvKey     = "LOG_FORMAT"
-	logFormatEnvDefault = "JSON"
+	logFormatEnvDefault = jsonLogFormat
+)
+
+const (
+	jsonLogFormat = "JSON"
+	textLogFormat = "TEXT"
 )
 
 // Server environment variable key and default values.
