@@ -192,7 +192,7 @@ func (parser *parser) logFormat(envKey, envDefault string) string {
 	case LogFormatText:
 		return LogFormatText
 	default:
-		parser.appendError(fmt.Errorf("failed to parse log format (%s) got=%q", envKey, env))
+		parser.appendError(fmt.Errorf("failed to parse log format (%s) got=%q: it must be either %q or %q", envKey, env, LogFormatJSON, LogFormatText))
 		return ""
 	}
 }
