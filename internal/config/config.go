@@ -186,7 +186,7 @@ func (parser *parser) logFormat(envKey, envDefault string) string {
 	case textLogFormat:
 		return textLogFormat
 	default:
-		parser.appendError(fmt.Errorf("invalid log format (%s) got=%q", envKey, env))
+		parser.appendError(fmt.Errorf("failed to parse log format (%s) got=%q", envKey, env))
 		return ""
 	}
 }
@@ -194,8 +194,7 @@ func (parser *parser) logFormat(envKey, envDefault string) string {
 // hostPort retrieves a "host:port" string from an environment variable,
 // validates it, and returns it.
 // It also checks if the port is within the IANA range.
-// If parsing or validation fails, it records the error and returns an empty
-// string.
+// If validation fails, it records the error and returns an empty string.
 func (parser *parser) hostPort(envKey, envDefault string) string {
 	env := parser.env(envKey, envDefault)
 	_, portString, err := net.SplitHostPort(env)
