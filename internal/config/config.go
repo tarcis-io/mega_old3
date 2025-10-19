@@ -155,7 +155,12 @@ func (parser *parser) env(envKey, envDefault string) string {
 	return envDefault
 }
 
-// logLevel
+// logLevel retrieves a log level string from an environment variable, parses
+// it, and returns it as a slog.Level.
+// It accepts "DEBUG", "INFO", "WARN" or "ERROR" (case-insensitive) or a
+// numerical level (e.g., -4, 0, 4, 8).
+// If parsing or validation fails, it records the error and returns a zero
+// log level.
 func (parser *parser) logLevel(envKey, envDefault string) slog.Level {
 	env := parser.env(envKey, envDefault)
 	var logLevel slog.Level
