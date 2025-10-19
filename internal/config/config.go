@@ -50,10 +50,15 @@ const (
 type (
 	// Config holds the application configuration.
 	Config struct {
-		// LogLevel
+		// LogLevel specifies the minimum level of log messages to output.
+		// Valid values are "DEBUG", "INFO", "WARN", "ERROR", or numerical
+		// levels.
+		// Default: "INFO".
 		LogLevel slog.Level
 
-		// LogFormat
+		// LogFormat specifies the output format for log messages.
+		// Valid values are "JSON" or "TEXT".
+		// Default: "JSON".
 		LogFormat string
 
 		// ServerAddress specifies the TCP address for the server to listen on,
