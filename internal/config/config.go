@@ -155,6 +155,17 @@ func (parser *parser) env(envKey, envDefault string) string {
 	return envDefault
 }
 
+// logLevel
+func (parser *parser) logLevel(envKey, envDefault string) slog.Level {
+	env := parser.env(envKey, envDefault)
+	var logLevel slog.Level
+	if err := logLevel.UnmarshalText([]byte(env)); err != nil {
+		parser.appendError(fmt.Errorf("failed to parse log level (%s) got=%q: %w", envKey, env, err))
+		return 0
+	}
+	return logLevel
+}
+
 // hostPort retrieves a "host:port" string from an environment variable,
 // validates it, and returns it.
 // It also checks if the port is within the IANA range.
