@@ -107,6 +107,7 @@ type (
 func New() (*Config, error) {
 	parser := newParser()
 	config := &Config{
+		LogLevel:                parser.logLevel(logLevelEnvKey, logLevelEnvDefault),
 		ServerAddress:           parser.hostPort(serverAddressEnvKey, serverAddressEnvDefault),
 		ServerReadTimeout:       parser.duration(serverReadTimeoutEnvKey, serverReadTimeoutEnvDefault),
 		ServerReadHeaderTimeout: parser.duration(serverReadHeaderTimeoutEnvKey, serverReadHeaderTimeoutEnvDefault),
