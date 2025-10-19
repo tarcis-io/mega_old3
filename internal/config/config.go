@@ -17,13 +17,13 @@ const (
 	logLevelEnvKey      = "LOG_LEVEL"
 	logLevelEnvDefault  = "INFO"
 	logFormatEnvKey     = "LOG_FORMAT"
-	logFormatEnvDefault = jsonLogFormat
+	logFormatEnvDefault = LogFormatJSON
 )
 
 // Supported log formats.
 const (
-	jsonLogFormat = "JSON"
-	textLogFormat = "TEXT"
+	LogFormatJSON = "JSON"
+	LogFormatText = "TEXT"
 )
 
 // Server environment variable key and default values.
@@ -187,10 +187,10 @@ func (parser *parser) logLevel(envKey, envDefault string) slog.Level {
 func (parser *parser) logFormat(envKey, envDefault string) string {
 	env := parser.env(envKey, envDefault)
 	switch strings.ToUpper(env) {
-	case jsonLogFormat:
-		return jsonLogFormat
-	case textLogFormat:
-		return textLogFormat
+	case LogFormatJSON:
+		return LogFormatJSON
+	case LogFormatText:
+		return LogFormatText
 	default:
 		parser.appendError(fmt.Errorf("failed to parse log format (%s) got=%q", envKey, env))
 		return ""
