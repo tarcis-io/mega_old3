@@ -4,6 +4,7 @@ package config
 import (
 	"errors"
 	"fmt"
+	"log/slog"
 	"net"
 	"os"
 	"strconv"
@@ -43,6 +44,12 @@ const (
 type (
 	// Config holds the application configuration.
 	Config struct {
+		// LogLevel
+		LogLevel slog.Level
+
+		// LogFormat
+		LogFormat string
+
 		// ServerAddress specifies the TCP address for the server to listen on,
 		// in the form "host:port" (e.g. "127.0.0.1:3000").
 		// Default: "localhost:8080".
