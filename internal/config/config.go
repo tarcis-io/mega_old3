@@ -108,6 +108,7 @@ func New() (*Config, error) {
 	parser := newParser()
 	config := &Config{
 		LogLevel:                parser.logLevel(logLevelEnvKey, logLevelEnvDefault),
+		LogFormat:               parser.logFormat(logFormatEnvKey, logFormatEnvDefault),
 		ServerAddress:           parser.hostPort(serverAddressEnvKey, serverAddressEnvDefault),
 		ServerReadTimeout:       parser.duration(serverReadTimeoutEnvKey, serverReadTimeoutEnvDefault),
 		ServerReadHeaderTimeout: parser.duration(serverReadHeaderTimeoutEnvKey, serverReadHeaderTimeoutEnvDefault),
@@ -170,6 +171,18 @@ func (parser *parser) logLevel(envKey, envDefault string) slog.Level {
 		return 0
 	}
 	return logLevel
+}
+
+// logFormat
+func (parser *parser) logFormat(envKey, envDefault string) string {
+	env := parser.env(envKey, envDefault)
+	switch env {
+	case jsonLogFormat, textLogFormat:
+		return env
+	default:
+		parser.appendError(fmt.Errorf("invalid log format (%s) got=%q", envKey, env))
+		return ""
+	}
 }
 
 // hostPort retrieves a "host:port" string from an environment variable,
