@@ -63,20 +63,20 @@ type (
 
 		// ServerReadTimeout is the maximum duration for reading the entire
 		// request, including the body.
-		// It helps prevent the server from hanging requests indefinitely.
+		// It helps prevent the server from hanging on requests indefinitely.
 		// Default: 5 * time.Second.
 		ServerReadTimeout time.Duration
 
 		// ServerReadHeaderTimeout is the amount of time allowed to read
 		// request headers.
-		// It helps prevent the server from hanging requests indefinitely and
-		// is enforced before the request body is read.
+		// It helps prevent the server from hanging on requests indefinitely
+		// and is enforced before the request body is read.
 		// Default: 2 * time.Second.
 		ServerReadHeaderTimeout time.Duration
 
 		// ServerWriteTimeout is the maximum duration before timing out writes
 		// of the response.
-		// It helps prevent the server from hanging responses indefinitely.
+		// It helps prevent the server from hanging on responses indefinitely.
 		// Default: 10 * time.Second.
 		ServerWriteTimeout time.Duration
 
