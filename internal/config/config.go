@@ -20,6 +20,7 @@ const (
 	logFormatEnvDefault = jsonLogFormat
 )
 
+// Supported log formats.
 const (
 	jsonLogFormat = "JSON"
 	textLogFormat = "TEXT"
