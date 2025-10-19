@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -173,12 +174,17 @@ func (parser *parser) logLevel(envKey, envDefault string) slog.Level {
 	return logLevel
 }
 
-// logFormat
+// logFormat retrieves a log format string from an environment variable,
+// validates it, and returns it.
+// It accepts "JSON" or "TEXT" (case-insensitive).
+// If validation fails, it records the error and returns an empty string.
 func (parser *parser) logFormat(envKey, envDefault string) string {
 	env := parser.env(envKey, envDefault)
-	switch env {
-	case jsonLogFormat, textLogFormat:
-		return env
+	switch strings.ToUpper(env) {
+	case jsonLogFormat:
+		return jsonLogFormat
+	case textLogFormat:
+		return textLogFormat
 	default:
 		parser.appendError(fmt.Errorf("invalid log format (%s) got=%q", envKey, env))
 		return ""
