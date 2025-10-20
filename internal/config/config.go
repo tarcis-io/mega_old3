@@ -12,18 +12,18 @@ import (
 	"time"
 )
 
+// Supported log formats.
+const (
+	LogFormatJSON = "JSON"
+	LogFormatText = "TEXT"
+)
+
 // Log environment variable key and default values.
 const (
 	logLevelEnvKey      = "LOG_LEVEL"
 	logLevelEnvDefault  = "INFO"
 	logFormatEnvKey     = "LOG_FORMAT"
 	logFormatEnvDefault = LogFormatJSON
-)
-
-// Supported log formats.
-const (
-	LogFormatJSON = "JSON"
-	LogFormatText = "TEXT"
 )
 
 // Server environment variable key and default values.
