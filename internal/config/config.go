@@ -98,12 +98,6 @@ type (
 		// Default: 15 * time.Second.
 		ServerShutdownTimeout time.Duration
 	}
-
-	// parser is a helper struct for parsing configuration values.
-	parser struct {
-		// errs holds any errors that occurred during parsing.
-		errs []error
-	}
 )
 
 // New creates and returns a new Config instance by loading, parsing, and
@@ -128,6 +122,14 @@ func New() (*Config, error) {
 	}
 	return config, nil
 }
+
+type (
+	// parser is a helper struct for parsing configuration values.
+	parser struct {
+		// errs holds any errors that occurred during parsing.
+		errs []error
+	}
+)
 
 // newParser creates and returns a new initialized parser instance.
 func newParser() *parser {
