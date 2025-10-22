@@ -255,6 +255,9 @@ func TestNew(t *testing.T) {
 	}
 }
 
+// mustParseLogLevel is a helper function that parses a log level string into a
+// slog.Level.
+// It panics if the parsing fails.
 func mustParseLogLevel(logLevel string) slog.Level {
 	var slogLevel slog.Level
 	if err := slogLevel.UnmarshalText([]byte(logLevel)); err != nil {
