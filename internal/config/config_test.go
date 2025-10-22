@@ -256,7 +256,11 @@ func TestNew(t *testing.T) {
 }
 
 func mustParseLogLevel(logLevel string) slog.Level {
-	return 0
+	var slogLevel slog.Level
+	if err := slogLevel.UnmarshalText([]byte(logLevel)); err != nil {
+		panic(err)
+	}
+	return slogLevel
 }
 
 // mustParseDuration is a helper function that parses a duration string into a
