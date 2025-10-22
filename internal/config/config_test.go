@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log/slog"
 	"reflect"
 	"testing"
 	"time"
@@ -25,6 +26,7 @@ func TestNew(t *testing.T) {
 		{
 			name: "should create a new Config instance with default values",
 			wantConfig: &Config{
+				LogLevel:                mustParseLogLevel(logLevelEnvDefault),
 				ServerAddress:           serverAddressEnvDefault,
 				ServerReadTimeout:       mustParseDuration(serverReadTimeoutEnvDefault),
 				ServerReadHeaderTimeout: mustParseDuration(serverReadHeaderTimeoutEnvDefault),
@@ -37,6 +39,7 @@ func TestNew(t *testing.T) {
 		{
 			name: "should create a new Config instance with custom values",
 			envValues: map[string]string{
+				logLevelEnvKey:                "DEBUG",
 				serverAddressEnvKey:           "127.0.0.1:8081",
 				serverReadTimeoutEnvKey:       "20s",
 				serverReadHeaderTimeoutEnvKey: "10s",
@@ -45,6 +48,7 @@ func TestNew(t *testing.T) {
 				serverShutdownTimeoutEnvKey:   "30s",
 			},
 			wantConfig: &Config{
+				LogLevel:                mustParseLogLevel("DEBUG"),
 				ServerAddress:           "127.0.0.1:8081",
 				ServerReadTimeout:       mustParseDuration("20s"),
 				ServerReadHeaderTimeout: mustParseDuration("10s"),
@@ -249,6 +253,10 @@ func TestNew(t *testing.T) {
 			}
 		})
 	}
+}
+
+func mustParseLogLevel(logLevel string) slog.Level {
+	return 0
 }
 
 // mustParseDuration is a helper function that parses a duration string into a
