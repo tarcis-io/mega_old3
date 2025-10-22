@@ -174,7 +174,7 @@ func (parser *parser) logLevel(envKey, envDefault string) slog.Level {
 	var logLevel slog.Level
 	if err := logLevel.UnmarshalText([]byte(env)); err != nil {
 		parser.appendError(fmt.Errorf("failed to parse log level (%s) got=%q: %w", envKey, env, err))
-		return slog.LevelInfo
+		return 0
 	}
 	return logLevel
 }
