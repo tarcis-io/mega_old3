@@ -27,6 +27,7 @@ func TestNew(t *testing.T) {
 			name: "should create a new Config instance with default values",
 			wantConfig: &Config{
 				LogLevel:                mustParseLogLevel(logLevelEnvDefault),
+				LogFormat:               logFormatEnvDefault,
 				ServerAddress:           serverAddressEnvDefault,
 				ServerReadTimeout:       mustParseDuration(serverReadTimeoutEnvDefault),
 				ServerReadHeaderTimeout: mustParseDuration(serverReadHeaderTimeoutEnvDefault),
@@ -40,6 +41,7 @@ func TestNew(t *testing.T) {
 			name: "should create a new Config instance with custom values",
 			envValues: map[string]string{
 				logLevelEnvKey:                "DEBUG",
+				logFormatEnvKey:               "TEXT",
 				serverAddressEnvKey:           "127.0.0.1:8081",
 				serverReadTimeoutEnvKey:       "20s",
 				serverReadHeaderTimeoutEnvKey: "10s",
@@ -49,6 +51,7 @@ func TestNew(t *testing.T) {
 			},
 			wantConfig: &Config{
 				LogLevel:                mustParseLogLevel("DEBUG"),
+				LogFormat:               "TEXT",
 				ServerAddress:           "127.0.0.1:8081",
 				ServerReadTimeout:       mustParseDuration("20s"),
 				ServerReadHeaderTimeout: mustParseDuration("10s"),
@@ -61,10 +64,13 @@ func TestNew(t *testing.T) {
 		{
 			name: "should create a new Config instance with default and custom values",
 			envValues: map[string]string{
+				logLevelEnvKey:              "DEBUG",
 				serverAddressEnvKey:         "0.0.0.0:3000",
 				serverShutdownTimeoutEnvKey: "1m",
 			},
 			wantConfig: &Config{
+				LogLevel:                mustParseLogLevel("DEBUG"),
+				LogFormat:               logFormatEnvDefault,
 				ServerAddress:           "0.0.0.0:3000",
 				ServerReadTimeout:       mustParseDuration(serverReadTimeoutEnvDefault),
 				ServerReadHeaderTimeout: mustParseDuration(serverReadHeaderTimeoutEnvDefault),
@@ -73,6 +79,34 @@ func TestNew(t *testing.T) {
 				ServerShutdownTimeout:   mustParseDuration("1m"),
 			},
 			wantError: false,
+		},
+		{
+			name: "should return an error if the log level cannot be parsed: empty",
+			envValues: map[string]string{
+				logLevelEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the log level cannot be parsed: invalid",
+			envValues: map[string]string{
+				logLevelEnvKey: "invalid",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the log format cannot be parsed: empty",
+			envValues: map[string]string{
+				logFormatEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the log format cannot be parsed: invalid",
+			envValues: map[string]string{
+				logFormatEnvKey: "invalid",
+			},
+			wantError: true,
 		},
 		{
 			name: "should return an error if the server address cannot be parsed: empty",
