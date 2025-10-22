@@ -133,10 +133,7 @@ type (
 
 // newParser creates and returns a new initialized parser instance.
 func newParser() *parser {
-	parser := &parser{
-		errs: []error{},
-	}
-	return parser
+	return &parser{}
 }
 
 // err returns a single error containing all errors found during the parsing
@@ -177,7 +174,7 @@ func (parser *parser) logLevel(envKey, envDefault string) slog.Level {
 	var logLevel slog.Level
 	if err := logLevel.UnmarshalText([]byte(env)); err != nil {
 		parser.appendError(fmt.Errorf("failed to parse log level (%s) got=%q: %w", envKey, env, err))
-		return 0
+		return slog.LevelInfo
 	}
 	return logLevel
 }
@@ -187,8 +184,7 @@ func (parser *parser) logLevel(envKey, envDefault string) slog.Level {
 // It accepts "JSON" or "TEXT" (case-insensitive).
 // If validation fails, it records the error and returns an empty string.
 func (parser *parser) logFormat(envKey, envDefault string) string {
-	env := parser.env(envKey, envDefault)
-	switch strings.ToUpper(env) {
+	switch env := strings.ToUpper(parser.env(envKey, envDefault)); env {
 	case LogFormatJSON:
 		return LogFormatJSON
 	case LogFormatText:
