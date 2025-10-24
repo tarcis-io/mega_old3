@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
 
@@ -25,5 +26,9 @@ func run() error {
 }
 
 func setupConfig() (*config.Config, error) {
-	return nil, nil
+	config, err := config.New()
+	if err != nil {
+		return nil, fmt.Errorf("failed to create config: %w", err)
+	}
+	return config, nil
 }
