@@ -3,6 +3,8 @@ package main
 import (
 	"log/slog"
 	"os"
+
+	"mega/internal/config"
 )
 
 func main() {
@@ -15,5 +17,13 @@ func main() {
 }
 
 func run() error {
+	_, err := setupConfig()
+	if err != nil {
+		return err
+	}
 	return nil
+}
+
+func setupConfig() (*config.Config, error) {
+	return nil, nil
 }
