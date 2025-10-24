@@ -2,15 +2,18 @@
 package main
 
 import (
+	"log/slog"
 	"os"
+
+	"mega/internal/config"
 )
 
 func main() {
-	if err := run(); err != nil {
+	if err := run(nil, nil); err != nil {
 		os.Exit(1)
 	}
 }
 
-func run() error {
+func run(config *config.Config, logger *slog.Logger) error {
 	return nil
 }
