@@ -9,7 +9,11 @@ import (
 )
 
 func main() {
-	if err := run(nil, nil); err != nil {
+	config, err := config.New()
+	if err != nil {
+		panic(err)
+	}
+	if err := run(config, nil); err != nil {
 		os.Exit(1)
 	}
 }
