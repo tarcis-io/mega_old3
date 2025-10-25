@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log/slog"
 	"os"
 
@@ -21,7 +22,7 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("failed to create config: %w", err)
 	}
-	logger, err := newLogger(config)
+	logger, err := newLogger(config, os.Stdout)
 	if err != nil {
 		return fmt.Errorf("failed to create logger: %w", err)
 	}
@@ -38,16 +39,16 @@ func run() error {
 	return nil
 }
 
-func newLogger(cfg *config.Config) (*slog.Logger, error) {
+func newLogger(cfg *config.Config, writer io.Writer) (*slog.Logger, error) {
 	loggerHandlerOptions := &slog.HandlerOptions{
 		Level: cfg.LogLevel,
 	}
 	var loggerHandler slog.Handler
 	switch cfg.LogFormat {
 	case config.LogFormatJSON:
-		loggerHandler = slog.NewJSONHandler(os.Stdout, loggerHandlerOptions)
+		loggerHandler = slog.NewJSONHandler(writer, loggerHandlerOptions)
 	case config.LogFormatText:
-		loggerHandler = slog.NewTextHandler(os.Stdout, loggerHandlerOptions)
+		loggerHandler = slog.NewTextHandler(writer, loggerHandlerOptions)
 	default:
 		return nil, fmt.Errorf("unknown log format: %s", cfg.LogFormat)
 	}
