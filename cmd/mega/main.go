@@ -21,14 +21,23 @@ func main() {
 	}
 	slog.SetDefault(logger)
 	slog.Info("Running application")
-	if err := run(config, logger); err != nil {
+	if err := run(); err != nil {
 		slog.Error("Application stopped unexpectedly", "error", err)
 		os.Exit(1)
 	}
 	slog.Info("Application stopped successfully")
 }
 
-func run(config *config.Config, logger *slog.Logger) error {
+func run() error {
+	config, err := config.New()
+	if err != nil {
+		return fmt.Errorf("failed to create config: %w", err)
+	}
+	logger, err := newLogger(config)
+	if err != nil {
+		return fmt.Errorf("failed to create logger: %w", err)
+	}
+	slog.SetDefault(logger)
 	server, err := server.New(config, logger)
 	if err != nil {
 		return fmt.Errorf("failed to create server: %w", err)
