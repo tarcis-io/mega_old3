@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"mega/internal/config"
+	"mega/internal/server"
 )
 
 func main() {
@@ -28,7 +29,11 @@ func main() {
 }
 
 func run(config *config.Config, logger *slog.Logger) error {
-	return nil
+	server, err := server.New(config, logger)
+	if err != nil {
+		return fmt.Errorf("failed to create server: %w", err)
+	}
+	return server.Run()
 }
 
 func newLogger(cfg *config.Config) (*slog.Logger, error) {
