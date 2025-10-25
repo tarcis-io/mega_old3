@@ -27,8 +27,11 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	_, err = setupServer(config, logger)
+	server, err := setupServer(config, logger)
 	if err != nil {
+		return err
+	}
+	if err := server.Run(); err != nil {
 		return err
 	}
 	return nil
