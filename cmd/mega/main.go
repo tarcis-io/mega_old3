@@ -25,10 +25,16 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("failed to create logger: %w", err)
 	}
-	_, err = server.New(config, logger)
+	server, err := server.New(config, logger)
 	if err != nil {
 		return fmt.Errorf("failed to create server: %w", err)
 	}
+	logger.Info("Running application")
+	if err := server.Run(); err != nil {
+		logger.Error("Application stopped unexpectedly", "error", err)
+		return err
+	}
+	logger.Info("Application stopped successfully")
 	return nil
 }
 
