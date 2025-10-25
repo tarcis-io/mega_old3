@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"log/slog"
 	"os"
 
@@ -10,6 +11,15 @@ import (
 )
 
 func main() {
+	config, err := setupConfig()
+	if err != nil {
+		log.Fatalf("failed to create config: %v", err)
+	}
+	logger, err := setupLogger(config)
+	if err != nil {
+		log.Fatalf("failed to create logger: %v", err)
+	}
+	slog.SetDefault(logger)
 	slog.Info("Running application")
 	if err := run(); err != nil {
 		slog.Error("Application stopped unexpectedly", "error", err)
@@ -56,7 +66,6 @@ func setupLogger(cfg *config.Config) (*slog.Logger, error) {
 		return nil, fmt.Errorf("failed to create logger: unknown log format: %s", cfg.LogFormat)
 	}
 	logger := slog.New(loggerHandler)
-	slog.SetDefault(logger)
 	return logger, nil
 }
 
