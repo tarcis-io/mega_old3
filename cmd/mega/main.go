@@ -18,7 +18,11 @@ func main() {
 }
 
 func run() error {
-	_, err := setupConfig()
+	config, err := setupConfig()
+	if err != nil {
+		return err
+	}
+	_, err = setupLogger(config)
 	if err != nil {
 		return err
 	}
@@ -31,4 +35,8 @@ func setupConfig() (*config.Config, error) {
 		return nil, fmt.Errorf("failed to create config: %w", err)
 	}
 	return config, nil
+}
+
+func setupLogger(cfg *config.Config) (*slog.Logger, error) {
+	return nil, nil
 }
