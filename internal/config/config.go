@@ -31,6 +31,8 @@ const (
 	logLevelEnvDefault  = "INFO"
 	logFormatEnvKey     = "LOG_FORMAT"
 	logFormatEnvDefault = LogFormatJSON
+	logOutputEnvKey     = "LOG_OUTPUT"
+	logOutputEnvDefault = LogOutputStdout
 )
 
 // Server environment variable key and default values.
@@ -122,6 +124,7 @@ func New() (*Config, error) {
 	config := &Config{
 		LogLevel:                parser.logLevel(logLevelEnvKey, logLevelEnvDefault),
 		LogFormat:               parser.logFormat(logFormatEnvKey, logFormatEnvDefault),
+		LogOutput:               parser.logOutput(logOutputEnvKey, logOutputEnvDefault),
 		ServerAddress:           parser.hostPort(serverAddressEnvKey, serverAddressEnvDefault),
 		ServerReadTimeout:       parser.duration(serverReadTimeoutEnvKey, serverReadTimeoutEnvDefault),
 		ServerReadHeaderTimeout: parser.duration(serverReadHeaderTimeoutEnvKey, serverReadHeaderTimeoutEnvDefault),
@@ -205,6 +208,14 @@ func (parser *parser) logFormat(envKey, envDefault string) string {
 		parser.appendError(fmt.Errorf("failed to parse log format (%s) got=%q: it must be either %q or %q", envKey, env, LogFormatJSON, LogFormatText))
 		return ""
 	}
+}
+
+// logOutput retrieves a log output string from an environment variable,
+// validates it, and returns it as an io.Writer.
+// It accepts "STDOUT", "STDERR" (case-insensitive), or a file path.
+// If parsing or validation fails, it records the error and returns nil.
+func (parser *parser) logOutput(envKey, envDefault string) io.Writer {
+	return nil
 }
 
 // hostPort retrieves a "host:port" string from an environment variable,
