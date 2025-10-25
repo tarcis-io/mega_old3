@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 
 	"mega/internal/config"
@@ -15,9 +16,17 @@ func main() {
 }
 
 func run() error {
-	_, err := config.New()
+	config, err := config.New()
 	if err != nil {
 		return fmt.Errorf("failed to create config: %w", err)
 	}
+	_, err = newLogger(config)
+	if err != nil {
+		return fmt.Errorf("failed to create logger: %w", err)
+	}
 	return nil
+}
+
+func newLogger(cfg *config.Config) (*slog.Logger, error) {
+	return nil, nil
 }
