@@ -60,5 +60,9 @@ func setupLogger(cfg *config.Config) (*slog.Logger, error) {
 }
 
 func setupServer(cfg *config.Config, logger *slog.Logger) (*server.Server, error) {
-	return nil, nil
+	server, err := server.New(cfg, logger)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create server: %w", err)
+	}
+	return server, nil
 }
