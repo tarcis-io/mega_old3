@@ -31,10 +31,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	if err := server.Run(); err != nil {
-		return err
-	}
-	return nil
+	return server.Run()
 }
 
 func setupConfig() (*config.Config, error) {
@@ -59,6 +56,7 @@ func setupLogger(cfg *config.Config) (*slog.Logger, error) {
 		return nil, fmt.Errorf("failed to create logger: unknown log format: %s", cfg.LogFormat)
 	}
 	logger := slog.New(loggerHandler)
+	slog.SetDefault(logger)
 	return logger, nil
 }
 
