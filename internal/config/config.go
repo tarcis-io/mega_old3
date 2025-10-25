@@ -4,6 +4,7 @@ package config
 import (
 	"errors"
 	"fmt"
+	"io"
 	"log/slog"
 	"net"
 	"os"
@@ -16,6 +17,12 @@ import (
 const (
 	LogFormatJSON = "JSON"
 	LogFormatText = "TEXT"
+)
+
+// Supported log outputs.
+const (
+	LogOutputStdout = "STDOUT"
+	LogOutputStderr = "STDERR"
 )
 
 // Log environment variable key and default values.
@@ -61,6 +68,11 @@ type (
 		// Valid values are "JSON" or "TEXT".
 		// Default: "JSON".
 		LogFormat string
+
+		// LogOutput specifies the destination for log messages.
+		// Valid values are "STDOUT", "STDERR", or a file path.
+		// Default: "STDOUT".
+		LogOutput io.Writer
 
 		// ServerAddress specifies the TCP address for the server to listen on,
 		// in the form "host:port" (e.g. "127.0.0.1:3000").
