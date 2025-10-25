@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"mega/internal/config"
+	"mega/internal/server"
 )
 
 func main() {
@@ -22,7 +23,11 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	_, err = setupLogger(config)
+	logger, err := setupLogger(config)
+	if err != nil {
+		return err
+	}
+	_, err = setupServer(config, logger)
 	if err != nil {
 		return err
 	}
@@ -52,4 +57,8 @@ func setupLogger(cfg *config.Config) (*slog.Logger, error) {
 	}
 	logger := slog.New(loggerHandler)
 	return logger, nil
+}
+
+func setupServer(cfg *config.Config, logger *slog.Logger) (*server.Server, error) {
+	return nil, nil
 }
