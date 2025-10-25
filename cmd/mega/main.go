@@ -38,5 +38,18 @@ func setupConfig() (*config.Config, error) {
 }
 
 func setupLogger(cfg *config.Config) (*slog.Logger, error) {
-	return nil, nil
+	loggerHandlerOptions := &slog.HandlerOptions{
+		Level: cfg.LogLevel,
+	}
+	var loggerHandler slog.Handler
+	switch cfg.LogFormat {
+	case config.LogFormatJSON:
+		loggerHandler = slog.NewJSONHandler(os.Stdout, loggerHandlerOptions)
+	case config.LogFormatText:
+		loggerHandler = slog.NewTextHandler(os.Stdout, loggerHandlerOptions)
+	default:
+		return nil, fmt.Errorf("failed to create logger: unknown log format: %s", cfg.LogFormat)
+	}
+	logger := slog.New(loggerHandler)
+	return logger, nil
 }
