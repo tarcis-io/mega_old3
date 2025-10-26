@@ -161,8 +161,7 @@ func newParser() *parser {
 	return &parser{}
 }
 
-// err returns a single error containing all errors found during the parsing
-// process.
+// err joins all recorded errors into a single error using errors.Join.
 // If no errors were recorded, it returns nil.
 func (parser *parser) err() error {
 	if len(parser.errs) == 0 {
