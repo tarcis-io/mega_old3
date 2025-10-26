@@ -215,7 +215,18 @@ func (parser *parser) logFormat(envKey, envDefault string) string {
 // It accepts "STDOUT", "STDERR" (case-insensitive), or a file path.
 // If parsing or validation fails, it records the error and returns nil.
 func (parser *parser) logOutput(envKey, envDefault string) io.Writer {
-	return nil
+	env := parser.env(envKey, envDefault)
+	switch strings.ToUpper(env) {
+	case LogOutputStdout:
+		return os.Stdout
+	case LogOutputStderr:
+		return os.Stderr
+	case "":
+		parser.appendError(fmt.Errorf("failed to parse log output (%s) got=%q: it must be either %q, %q, or a file path", envKey, env, LogOutputStdout, LogOutputStderr))
+		return nil
+	default:
+		return nil
+	}
 }
 
 // hostPort retrieves a "host:port" string from an environment variable,
