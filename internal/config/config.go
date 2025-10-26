@@ -54,9 +54,9 @@ type (
 	// Config holds the application configuration.
 	Config struct {
 		// LogLevel specifies the minimum level of log messages to output.
-		// Valid values are "DEBUG", "INFO", "WARN", "ERROR", or numerical
-		// levels.
-		// Default: "INFO".
+		// This will be slog.LevelDebug, slog.LevelInfo, slog.LevelWarn,
+		// slog.LevelError, or a numerical level.
+		// Default: slog.LevelInfo.
 		LogLevel slog.Level
 
 		// LogFormat specifies the output format for log messages.
@@ -65,8 +65,10 @@ type (
 		LogFormat string
 
 		// LogOutput specifies the destination for log messages.
-		// Valid values are "STDOUT", "STDERR", or a file path.
-		// Default: "STDOUT".
+		// This will be os.Stdout, os.Stderr, or an *os.File.
+		// If the writer is an *os.File, the caller is responsible for closing
+		// it.
+		// Default: os.Stdout.
 		LogOutput io.Writer
 
 		// ServerAddress specifies the TCP address for the server to listen on,
@@ -206,6 +208,8 @@ func (parser *parser) logFormat(envKey, envDefault string) string {
 // logOutput retrieves a log output string from an environment variable,
 // validates it, and returns it as an io.Writer.
 // It accepts "STDOUT", "STDERR" (case-insensitive), or a file path.
+// If a file path is provided, the returned io.Writer will be an *os.File that
+// the caller is responsible for closing.
 // If parsing or validation fails, it records the error and returns nil.
 func (parser *parser) logOutput(envKey, envDefault string) io.Writer {
 	switch env := parser.env(envKey, envDefault); strings.ToUpper(env) {
