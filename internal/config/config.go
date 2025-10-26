@@ -8,7 +8,6 @@ import (
 	"log/slog"
 	"net"
 	"os"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -49,12 +48,6 @@ const (
 	serverIdleTimeoutEnvDefault       = "60s"
 	serverShutdownTimeoutEnvKey       = "SERVER_SHUTDOWN_TIMEOUT"
 	serverShutdownTimeoutEnvDefault   = "15s"
-)
-
-// TCP port range as per IANA standard.
-const (
-	minPort = 0
-	maxPort = 65535
 )
 
 type (
@@ -239,18 +232,8 @@ func (parser *parser) logOutput(envKey, envDefault string) io.Writer {
 // If validation fails, it records the error and returns an empty string.
 func (parser *parser) hostPort(envKey, envDefault string) string {
 	env := parser.env(envKey, envDefault)
-	_, portString, err := net.SplitHostPort(env)
-	if err != nil {
+	if _, err := net.ResolveTCPAddr("tcp", env); err != nil {
 		parser.appendError(fmt.Errorf("failed to parse \"host:port\" (%s) got=%q: %w", envKey, env, err))
-		return ""
-	}
-	port, err := strconv.Atoi(portString)
-	if err != nil {
-		parser.appendError(fmt.Errorf("failed to parse port (%s) got=%q: %w", envKey, portString, err))
-		return ""
-	}
-	if port < minPort || port > maxPort {
-		parser.appendError(fmt.Errorf("port (%s) must be between %d and %d got=%d", envKey, minPort, maxPort, port))
 		return ""
 	}
 	return env
