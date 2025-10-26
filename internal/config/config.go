@@ -66,8 +66,6 @@ type (
 
 		// LogOutput specifies the destination for log messages.
 		// This will be os.Stdout, os.Stderr, or an *os.File.
-		// If the writer is an *os.File, the caller is responsible for closing
-		// it.
 		// Default: os.Stdout.
 		LogOutput io.Writer
 
@@ -208,8 +206,6 @@ func (parser *parser) logFormat(envKey, envDefault string) string {
 // logOutput retrieves a log output string from an environment variable,
 // validates it, and returns it as an io.Writer.
 // It accepts "STDOUT", "STDERR" (case-insensitive), or a file path.
-// If a file path is provided, the returned io.Writer will be an *os.File that
-// the caller is responsible for closing.
 // If parsing or validation fails, it records the error and returns nil.
 func (parser *parser) logOutput(envKey, envDefault string) io.Writer {
 	switch env := parser.env(envKey, envDefault); strings.ToUpper(env) {
