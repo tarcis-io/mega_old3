@@ -240,7 +240,8 @@ func (parser *parser) logOutput(envKey, envDefault string) io.Writer {
 
 // hostPort retrieves a "host:port" string from an environment variable,
 // validates it, and returns it.
-// It also checks if the port is within the IANA range.
+// It checks the format, validates the port, and ensures the host is resolvable
+// (which may involve a DNS lookup).
 // If validation fails, it records the error and returns an empty string.
 func (parser *parser) hostPort(envKey, envDefault string) string {
 	env := parser.env(envKey, envDefault)
