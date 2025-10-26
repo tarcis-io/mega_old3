@@ -140,7 +140,10 @@ func (config *Config) Close() error {
 	if closer == os.Stdout || closer == os.Stderr {
 		return nil
 	}
-	return closer.Close()
+	if err := closer.Close(); err != nil {
+		return fmt.Errorf("failed to close log output: %w", err)
+	}
+	return nil
 }
 
 type (
