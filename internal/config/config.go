@@ -131,6 +131,18 @@ func New() (*Config, error) {
 	return config, nil
 }
 
+// Close
+func (config *Config) Close() error {
+	closer, is := config.LogOutput.(io.Closer)
+	if !is {
+		return nil
+	}
+	if closer == os.Stdout || closer == os.Stderr {
+		return nil
+	}
+	return closer.Close()
+}
+
 type (
 	// parser is a helper struct for parsing configuration values.
 	parser struct {
