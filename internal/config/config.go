@@ -215,8 +215,7 @@ func (parser *parser) logFormat(envKey, envDefault string) string {
 // It accepts "STDOUT", "STDERR" (case-insensitive), or a file path.
 // If parsing or validation fails, it records the error and returns nil.
 func (parser *parser) logOutput(envKey, envDefault string) io.Writer {
-	env := parser.env(envKey, envDefault)
-	switch strings.ToUpper(env) {
+	switch env := parser.env(envKey, envDefault); strings.ToUpper(env) {
 	case LogOutputStdout:
 		return os.Stdout
 	case LogOutputStderr:
