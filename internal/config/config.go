@@ -54,7 +54,7 @@ type (
 	// Config holds the application configuration.
 	Config struct {
 		// LogLevel specifies the minimum level of log messages to output.
-		// This will be slog.LevelDebug, slog.LevelInfo, slog.LevelWarn,
+		// It will be slog.LevelDebug, slog.LevelInfo, slog.LevelWarn,
 		// slog.LevelError, or a numerical level.
 		// Default: slog.LevelInfo.
 		LogLevel slog.Level
@@ -65,7 +65,7 @@ type (
 		LogFormat string
 
 		// LogOutput specifies the destination for log messages.
-		// This will be os.Stdout, os.Stderr, or an *os.File.
+		// It will be os.Stdout, os.Stderr, or an *os.File.
 		// Default: os.Stdout.
 		LogOutput io.Writer
 
@@ -131,7 +131,9 @@ func New() (*Config, error) {
 	return config, nil
 }
 
-// Close
+// Close cleans up any resources held by the Config, such as an open log output
+// file.
+// It returns an error if the cleanup operation fails.
 func (config *Config) Close() error {
 	closer, is := config.LogOutput.(io.Closer)
 	if !is {
