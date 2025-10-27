@@ -109,6 +109,20 @@ func TestNew(t *testing.T) {
 			wantError: true,
 		},
 		{
+			name: "should return an error if the log output cannot be parsed: empty",
+			envValues: map[string]string{
+				logOutputEnvKey: "",
+			},
+			wantError: true,
+		},
+		{
+			name: "should return an error if the log output cannot be parsed: invalid",
+			envValues: map[string]string{
+				logOutputEnvKey: "invalid",
+			},
+			wantError: true,
+		},
+		{
 			name: "should return an error if the server address cannot be parsed: empty",
 			envValues: map[string]string{
 				serverAddressEnvKey: "",
