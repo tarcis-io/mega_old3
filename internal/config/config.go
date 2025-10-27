@@ -21,8 +21,8 @@ const (
 
 // Supported log outputs.
 const (
-	LogOutputStdout = "STDOUT"
-	LogOutputStderr = "STDERR"
+	logOutputStdout = "STDOUT"
+	logOutputStderr = "STDERR"
 )
 
 // Log output file mode.
@@ -37,7 +37,7 @@ const (
 	logFormatEnvKey     = "LOG_FORMAT"
 	logFormatEnvDefault = LogFormatJSON
 	logOutputEnvKey     = "LOG_OUTPUT"
-	logOutputEnvDefault = LogOutputStdout
+	logOutputEnvDefault = logOutputStdout
 )
 
 // Server environment variable key and default values.
@@ -237,12 +237,12 @@ func (parser *parser) logFormat(envKey, envDefault string) string {
 // If parsing or validation fails, it records the error and returns nil.
 func (parser *parser) logOutput(envKey, envDefault string) io.Writer {
 	switch env := parser.env(envKey, envDefault); strings.ToUpper(env) {
-	case LogOutputStdout:
+	case logOutputStdout:
 		return os.Stdout
-	case LogOutputStderr:
+	case logOutputStderr:
 		return os.Stderr
 	case "":
-		parser.appendError(fmt.Errorf("failed to parse log output (%s) got=%q: it must be either %q, %q, or a file path", envKey, env, LogOutputStdout, LogOutputStderr))
+		parser.appendError(fmt.Errorf("failed to parse log output (%s) got=%q: it must be either %q, %q, or a file path", envKey, env, logOutputStdout, logOutputStderr))
 		return nil
 	default:
 		file, err := os.OpenFile(env, os.O_APPEND|os.O_CREATE|os.O_WRONLY, logOutputFileMode)
