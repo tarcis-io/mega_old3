@@ -40,6 +40,12 @@ const (
 	logOutputEnvDefault = logOutputStdout
 )
 
+// Supported TCP port range as per IANA standard.
+const (
+	tcpPortMin = 0
+	tcpPortMax = 65535
+)
+
 // Server environment variable key and default values.
 const (
 	serverAddressEnvKey               = "SERVER_ADDRESS"
@@ -54,12 +60,6 @@ const (
 	serverIdleTimeoutEnvDefault       = "60s"
 	serverShutdownTimeoutEnvKey       = "SERVER_SHUTDOWN_TIMEOUT"
 	serverShutdownTimeoutEnvDefault   = "15s"
-)
-
-// TCP port range as per IANA standard.
-const (
-	tcpPortMin = 0
-	tcpPortMax = 65535
 )
 
 type (
