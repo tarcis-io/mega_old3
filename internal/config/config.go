@@ -51,9 +51,10 @@ const (
 	serverShutdownTimeoutEnvDefault   = "15s"
 )
 
+// TCP port range as per IANA standard.
 const (
-	tcpMinPort = 0
-	tcpMaxPort = 65535
+	tcpPortMin = 0
+	tcpPortMax = 65535
 )
 
 type (
@@ -264,8 +265,8 @@ func (parser *parser) hostPort(envKey, envDefault string) string {
 		parser.appendError(fmt.Errorf("failed to parse port (%s) got=%q: %w", envKey, portString, err))
 		return ""
 	}
-	if port < tcpMinPort || port > tcpMaxPort {
-		parser.appendError(fmt.Errorf("port (%s) must be between %d and %d got=%d", envKey, tcpMinPort, tcpMaxPort, port))
+	if port < tcpPortMin || port > tcpPortMax {
+		parser.appendError(fmt.Errorf("port (%s) must be between %d and %d got=%d", envKey, tcpPortMin, tcpPortMax, port))
 		return ""
 	}
 	return env
