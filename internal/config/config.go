@@ -25,6 +25,11 @@ const (
 	LogOutputStderr = "STDERR"
 )
 
+// Log output file mode.
+const (
+	logOutputFileMode = 0644
+)
+
 // Log environment variable key and default values.
 const (
 	logLevelEnvKey      = "LOG_LEVEL"
@@ -240,7 +245,7 @@ func (parser *parser) logOutput(envKey, envDefault string) io.Writer {
 		parser.appendError(fmt.Errorf("failed to parse log output (%s) got=%q: it must be either %q, %q, or a file path", envKey, env, LogOutputStdout, LogOutputStderr))
 		return nil
 	default:
-		file, err := os.OpenFile(env, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		file, err := os.OpenFile(env, os.O_APPEND|os.O_CREATE|os.O_WRONLY, logOutputFileMode)
 		if err != nil {
 			parser.appendError(fmt.Errorf("failed to open log output file (%s) got=%q: %w", envKey, env, err))
 			return nil
