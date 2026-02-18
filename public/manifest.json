@@ -1,0 +1,29 @@
+{
+	"name": "Mega",
+	"short_name": "Mega",
+	"description": "The hallucinator machine.",
+	"id": "/",
+	"start_url": "/",
+	"theme_color": "black",
+	"background_color": "black",
+	"orientation": "any",
+	"display": "standalone",
+	"icons": [
+		{
+			"src": "/favicon-192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "/favicon-512-maskable.png",
+			"type": "image/png",
+			"sizes": "512x512",
+			"purpose": "maskable"
+		},
+		{
+			"src": "/favicon-512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	]
+}
