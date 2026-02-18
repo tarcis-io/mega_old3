@@ -9,6 +9,8 @@
 		"preview": "nuxt preview"
 	},
 	"dependencies": {
-		"nuxt": "latest"
+		"@nuxt/ui": "latest",
+		"nuxt": "latest",
+		"tailwindcss": "latest"
 	}
 }
