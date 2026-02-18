@@ -9,6 +9,7 @@
 		<link rel="icon" href="/favicon.ico" sizes="32x32" />
 		<Link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<Link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<Link rel="manifest" href="/manifest.json" />
 		<Title>{{ title }}</Title>
 	</Head>
 	<Body>
