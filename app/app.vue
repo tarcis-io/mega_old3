@@ -9,5 +9,7 @@
 			<Title>{{ title }}</Title>
 		</Head>
 	</Html>
-	<h1>Hello World, {{ title }}!</h1>
+	<UApp>
+		<h1>Hello World, {{ title }}!</h1>
+	</UApp>
 </template>
