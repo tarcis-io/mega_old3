@@ -1,4 +1,4 @@
 @charset "UTF-8";
 
 @import "tailwindcss";
-@import "@next/ui";
+@import "@nuxt/ui";
