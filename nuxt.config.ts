@@ -28,4 +28,7 @@ export default defineNuxtConfig({
 	modules: [
 		'@nuxt/ui',
 	],
+	css: [
+		'~/assets/css/app.css',
+	],
 });
