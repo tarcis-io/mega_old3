@@ -58,37 +58,30 @@ When providing instructions, assume that these tools are pre-installed and confi
   channel = "stable-25.05";
   packages = [
     pkgs.rustup
-    pkgs.pkg-config
-    pkgs.stdenv.cc
-    pkgs.gcc
-    pkgs.openssl
     pkgs.dioxus-cli
+    pkgs.pkg-config
+    pkgs.openssl
+    pkgs.stdenv.cc
   ];
   env = {
+    PATH = [ "/home/user/.cargo/bin" ];
     LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [ pkgs.openssl ];
-    RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
   };
   idx = {
     extensions = [
       "rust-lang.rust-analyzer"
       "tamasfe.even-better-toml"
-      "serayuzgur.crates"
       "vadimcn.vscode-lldb"
       "google.gemini-cli-vscode-ide-companion"
     ];
     workspace = {
       onCreate = {
         default.openFiles = [ "README.md" ];
-      };
-      onStart = {
-        setup-wasm = "rustup default stable && rustup target add wasm32-unknown-unknown";
+        setup-rust = "rustup default stable && rustup target add wasm32-unknown-unknown";
       };
     };
-    previews = { };
   };
 }
-
-
 
 {
     "[markdown]": {
