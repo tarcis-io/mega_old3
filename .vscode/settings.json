@@ -1,3 +1,10 @@
+.idx/
+.vscode/
+target/
+.gitignore
+GEMINI.md
+
+
 # Gemini AI Rules for Rust Projects
 
 ## 1. Persona & Expertise
