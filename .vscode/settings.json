@@ -77,11 +77,14 @@ When providing instructions, assume that these tools are pre-installed and confi
     workspace = {
       onCreate = {
         default.openFiles = [ "README.md" ];
-        setup-rust = "rustup default stable && rustup target add wasm32-unknown-unknown";
+      };
+      onStart = {
+        setup-rust = "rustup default stable && rustup target add wasm32-unknown-unknown && cargo install wasm-bindgen-cli";
       };
     };
   };
 }
+
 
 {
     "[markdown]": {
